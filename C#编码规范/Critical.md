@@ -124,10 +124,10 @@ void DoSomething(int someParameter)
 
 ### 6.ValueTask的正确使用
 当对ValueTask/ValueTask<TResult>实例执行以下操作时，会引发异常
-1.多次等待实例。
-2.多次调用AsTask。
-3.多次使用.Result或.GetAwaiter().GetResult
-4.在操作尚未完成时使用.Result或.GetAwaiter().GetResult()
+1. 多次等待实例。
+2. 多次调用AsTask。
+3. 多次使用.Result或.GetAwaiter().GetResult
+4. 在操作尚未完成时使用.Result或.GetAwaiter().GetResult()
 
 ### 7.不要隐藏基类方法
 错误的例子
