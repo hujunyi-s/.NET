@@ -58,7 +58,7 @@ class MyTest
     var fruitBasket = new List<Fruit>();
     fruitBasket.Add(new Orange());
     fruitBasket.Add(new Orange());
-    // fruitBasket.Add(new Apple());  // InvalidCastException
+    // fruitBasket.Add(new Apple());  //如果添加了，会导致异常
 
     foreach (Orange orange in fruitBasket) // InvalidCastException
     {
