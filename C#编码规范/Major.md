@@ -2,7 +2,7 @@
 
 必须遵循的编码习惯和注意事项
 
-#### 1.禁止使用 “=+” 代替 "+="
+### 1.禁止使用 “=+” 代替 "+="
 这将会使我们在书写的时候容易产生各种误解
 
 错误的例子
@@ -21,7 +21,7 @@ int num = 3;
 target = -num; //target = -3
 target += num; //target = -2
 ```
-#### 2.抽象类的构造函数应该为 private 或 protected
+### 2.抽象类的构造函数应该为 private 或 protected
 由于abstract类无法实例化，因此它们拥有 public 或 internal 构造函数毫无意义。如果在创建扩展类实例时存在基本的初始化逻辑，则可以将其放入构造函数中，但应该将该构造函数设置为 private 或 protected。
 
 错误的例子
@@ -45,7 +45,7 @@ abstract class Base
 }
 ```
 
-#### 3.不要在执行for循环的过程中修改循环索引
+### 3.不要在执行for循环的过程中修改循环索引
 
 错误的例子
 ```
@@ -77,11 +77,11 @@ class Foo
     }
 }
 ```
-#### 4.禁止使用 goto 语句
+### 4.禁止使用 goto 语句
 goto 是非结构化的流程控制语句，使用起来阅读困难，调试困难，理解困难，禁止使用
 
 
-#### 5.NaN 不能用于比较
+### 5.NaN 不能用于比较
 NaN本身甚至没有任何含义不具备比较的理解，判断NaN的最好方式是使用Number.IsNaN()方法
 
 错误的例子
@@ -104,7 +104,7 @@ if (double.IsNaN(a))
   console.log("a is not a number");
 }
 ```
-#### 6.不要使用无参构造函数实例化Guid类
+### 6.不要使用无参构造函数实例化Guid类
 对于这种场景，更多采用静态Guid类
 
 错误的例子
@@ -123,7 +123,7 @@ public void Foo(byte[] bytes)
     var g3 = new Guid(bytes);
 }
 ```
-#### 7.Obsolete 标记应该具有说明
+### 7.Obsolete 标记应该具有说明
 错误的例子
 ```
 public class Car
@@ -145,7 +145,7 @@ public class Car
 }
 ```
 
-#### 8.平台非托管方法不应该被公开
+### 8.平台非托管方法不应该被公开
 当调用平台非托管服务时，将它们保持为私有或内部状态可确保对其访问进行控制和正确管理。
 
 错误的例子
@@ -176,7 +176,7 @@ namespace MyLibrary
     }
 }
 ```
-#### 9.switch case 子句不能包含太多代码行
+### 9.switch case 子句不能包含太多代码行
 switch case 子句行数过多，会增加阅读维护的困难，默认行数阈值：3
 
 错误的例子
@@ -212,7 +212,7 @@ private void DoSomething()
     methodCall4("");
 }
 ```
-#### 10.switch 不应该含有太多 case
+### 10.switch 不应该含有太多 case
 当case超过4项时，建议使用字典代替
 
 错误的例子
@@ -267,10 +267,10 @@ public class TooManyCase
     }
 }
 ```
-#### 11.switch语句不要嵌套使用
+### 11.switch语句不要嵌套使用
 嵌套 switch 结构很难理解，因为很容易将内部 switch 的情况误认为属于外部语句。因此，应该避免使用嵌套的switch语句，如果实在不能，则考虑将内部switch移到另一个函数。
 
-#### 12.switch/if else 语句应该包含 default/else子句
+### 12.switch/if else 语句应该包含 default/else子句
 错误的例子
 ```
 int foo = 42;
@@ -299,7 +299,7 @@ switch (foo)
     throw new InvalidOperationException("Unexpected value foo = " + foo);
 }
 ```
-#### 13.每个单独的if判断序列，应该有自己独立的行
+### 13.每个单独的if判断序列，应该有自己独立的行
 错误的例子
 ```
 if (condition1) {
@@ -326,7 +326,7 @@ if (condition2) {
   //...
 }
 ```
-#### 14.警惕 if switch for while do try 等语句块嵌套太深
+### 14.警惕 if switch for while do try 等语句块嵌套太深
  这样的代码很难阅读，理解和重构，应该控制在3层以内
 
 错误的例子
@@ -353,7 +353,7 @@ if (condition1) // 第1层
 }
 ```
 
-#### 15.不要省略花括号
+### 15.不要省略花括号
 尽管没有任何技术上的问题，但是省略花括号可能会增加阅读难度和引起误解
 
 错误的例子
@@ -370,7 +370,7 @@ if (condition)
   CheckSomething();
 }
 ```
-#### 16.条件表达式不能太复杂
+### 16.条件表达式不能太复杂
 过于复杂的&&、|| 逻辑判断或条件表达式将会提高阅读难度和维护难度，应当控制在3个以内，复杂条件判断考虑用一个方法函数整合
 
 错误的例子
@@ -381,7 +381,7 @@ if (((condition1 && condition2) || (condition3 && condition4)) && condition5) { 
 ```
 if ((MyFirstCondition() || MySecondCondition()) && MyLastCondition()) { ... }
 ```
-#### 17.Url 应该用 System.Uri 而不是 String
+### 17.Url 应该用 System.Uri 而不是 String
 错误的例子
 ```
 using System;
@@ -426,7 +426,7 @@ namespace MyLibrary
    }
 }
 ```
-#### 18.重写 ToString 方法 返回值不能为 NULL
+### 18.重写 ToString 方法 返回值不能为 NULL
 错误的例子
 ```
 public override string ToString ()
@@ -455,7 +455,7 @@ public override string ToString ()
   }
 }
 ```
-#### 19.返回集合类型的方法，无数据时要返回空集合而不是 null
+### 19.返回集合类型的方法，无数据时要返回空集合而不是 null
 错误的例子
 ```
 public IEnumerable<Result> GetResults()
@@ -470,7 +470,7 @@ public IEnumerable<Result> GetResults()
     return Enumerable.Empty<Result>();
 }
 ```
-#### 20.Catch Final 重复的语句块要进行合并
+### 20.Catch Final 重复的语句块要进行合并
 错误的例子
 ```
 try
@@ -524,7 +524,7 @@ catch (InvalidOperationException ex)
   LogAndDie(ex);
 }
 ```
-#### 21.事件的订阅不要使用匿名委托
+### 21.事件的订阅不要使用匿名委托
 使用匿名委托来订阅事件的后果会导致事后无法从委托列表中取消订阅
 
 错误的例子
@@ -547,7 +547,7 @@ listView.PreviewTextInput + = func;
 
 listView.PreviewTextInput-= func;
 ```
-#### 22.引用类型参数的使用应该进行 null 判断 
+### 22.引用类型参数的使用应该进行 null 判断 
 错误的例子
 ```
 public class MyClass
@@ -598,7 +598,7 @@ public class MyClass
     }
 }
 ```
-#### 23.可空值类型必须进行空判断
+### 23.可空值类型必须进行空判断
 可空值类型往往会因为 Null 访问 Value抛出异常，在使用之前务必进行 Null 判断
 错误的例子
 ```
@@ -615,7 +615,7 @@ if (nullable.HasValue)
   UseValue(nullable.Value);
 }
 ```
-#### 24.不要在子表达式或断言中求值
+### 24.不要在子表达式或断言中求值
 子表达式或断言中的求值往往含义很关键，却又难以被阅读发现，使可读性降低，除 Lambda 条件表达式外
 
 错误的例子
@@ -634,7 +634,7 @@ var result = str.Substring（index，length）;
 }
 ```
 
-#### 25.数字类型不能溢出
+### 25.数字类型不能溢出
 数字是无限大的，但是容纳数字的类型是有限的，请防止数字溢出
 
 错误的例子
@@ -648,7 +648,7 @@ public int getTheNumber(int val) {
 }
 ```
 
-#### 26.类不能过多依赖其他的类（Single Responsibility Principle）
+### 26.类不能过多依赖其他的类（Single Responsibility Principle）
 基于单一职责原则，我们的类往往被拆分得很细的粒度，但如果不注意控制上层类的依赖关系，往往会形成过度的依赖，对可读性及维护性带来困难，对于类的依赖关系数量以及类的继承树，阈值控制在 5 个以内，超出阈值请考虑拆分
 
 错误的例子
@@ -667,7 +667,7 @@ public class Foo
 }
 ```
 
-#### 27.自定义 Attribute 应该设置好适用范围 AttributeUsageAttribute
+### 27.自定义 Attribute 应该设置好适用范围 AttributeUsageAttribute
 错误的例子
 ```
 using System;
@@ -719,7 +719,7 @@ namespace MyLibrary
    }
 }
 ```
-#### 28.重复的异常应该被正确抛出
+### 28.重复的异常应该被正确抛出
 错误的例子
 ```
 try
@@ -748,7 +748,7 @@ catch (ExceptionType2 exc)
   throw new Exception("My custom message", exc);
 }
 ```
-#### 29.仅在构造函数中修改赋值的字段应该设置为只读
+### 29.仅在构造函数中修改赋值的字段应该设置为只读
 错误的例子
 ```
 public class Person
@@ -773,15 +773,15 @@ public class Person
     }
 }
 ```
-#### 30.代码行数
+### 30.代码行数
 代码行数阈值
 1. 文件代码行数 ： 1000 行
 2. 方法函数代码行数： 80 行
 
 
-#### 31.没有用到的对象和空置的方法函数应该及时删除
+### 31.没有用到的对象和空置的方法函数应该及时删除
 
-#### 32.禁止使用幻数
+### 32.禁止使用幻数
 每一个逻辑数字应该具有意义，请不要在程序中直接使用幻数
 
 错误的例子
@@ -806,10 +806,10 @@ public static void DoSomething()
     }
 }
 ```
-#### 33.方法不应该包含太多参数
+### 33.方法不应该包含太多参数
 我们建议方法的参数最好能够少于 4 个，禁止超过 7 个，参数过多请考虑用参数模型封装
 
-#### 34.不要多次使用OrderBy
+### 34.不要多次使用OrderBy
 多次OrderBy完全没有任何意义，每次OrderBy将会对结果进行重新排序，结果仅代表最后一次OrderBy，所以多次排序请使用ThenBy
 
 错误的例子
@@ -826,7 +826,7 @@ var x = personList
   .ThenBy(person => person.Name)
   .ToList();
 ```
-#### 35.不要嵌套三元运算符
+### 35.不要嵌套三元运算符
 嵌套的三元运算符可读性非常差，请不要嵌套使用
 
 错误的例子
@@ -847,7 +847,7 @@ public string GetTitle(Person p)
   return p.IsMarried ? "Mrs. " : "Miss ";
 }
 ```
-#### 36.为了提高可读性，请不要在一行上放置多个语句
+### 36.为了提高可读性，请不要在一行上放置多个语句
 错误的例子
 ```
 if(someCondition) DoSomething();
@@ -859,7 +859,7 @@ if(someCondition)
   DoSomething();
 }
 ```
-#### 37.default选项应该置于末尾
+### 37.default选项应该置于末尾
 错误的例子
 ```
 switch (param)
