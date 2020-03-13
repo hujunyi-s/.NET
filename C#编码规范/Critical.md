@@ -6,7 +6,7 @@
 共享资源不应用于锁定，因为它会增加死锁的机会。任何其他线程都可以出于另一个不相关的目的而获取（或尝试获取）相同的锁。
 相反，应该为对象创建专用的锁实例，以避免死锁或锁争用。
 
-**错误的例子**
+错误的例子
 ```
 public void MyLockingMethod()
 {
@@ -16,7 +16,7 @@ public void MyLockingMethod()
     }
 }
 ```
-**正确的例子**
+正确的例子
 ```
 private readonly object lockObj = new object();
 
@@ -33,11 +33,11 @@ ConfigureAwait用于配置当前异步任务await之后是否需要切换到原�
 
 例如在一个WebRequest中，当调用了异步方法且该方法在await之后读取HttpContext.Current信息，则需要设置ConfigureAwait(true)，否则将会读取到空的HttpContext，而在无需原始线程上下文的情况应该使用ConfigureAwait(false) 以避免可能存在的上下文资源切换和死锁问题
 
-**错误的例子**
+错误的例子
 ```
 var response = await httpClient.GetAsync(url); 
 ```
-**正确的例子**
+正确的例子
 ```
 var response = await httpClient.GetAsync(url).ConfigureAwait(false);
 ```
@@ -45,7 +45,7 @@ var response = await httpClient.GetAsync(url).ConfigureAwait(false);
 #### 3.foreach的显式转换
 不要在foreach中使用显式转换，这有可能会引发InvalidCastException异常
 
-**错误的例子**
+错误的例子
 ```
 public class Fruit { }
 public class Orange : Fruit { }
@@ -67,7 +67,7 @@ class MyTest
   }
 }
 ```
-**正确的例子**
+正确的例子
 ```
 var fruitBasket = new List<Orange>();
 fruitBasket.Add(new Orange());
@@ -82,7 +82,7 @@ foreach (Orange orange in fruitBasket)
 #### 4.避免调用GC.Collect
 当程序执行GC.Collect的时候是基于阻塞的操作，继而检查和清理内存中的每个对象，主动调用也无法掌控何时运行及完成，一般此操作损失大于收益，我们应该将精力放在防止内存泄漏上面
 
-**错误的例子**
+错误的例子
 ```
 static void Main(string[] args)
 {
@@ -93,7 +93,7 @@ static void Main(string[] args)
 #### 5.使用nameof
 在重构的过程中，可能一些命名是会被改变的，要使用nameof读取对象的名称字符，从而降低耦合
 
-**错误的例子**
+错误的例子
 ```
 void DoSomething(int someParameter, string anotherParam)
 {
@@ -107,7 +107,7 @@ void DoSomething(int someParameter, string anotherParam)
     }
 }
 ```
-**正确的例子**
+正确的例子
 ```
 void DoSomething(int someParameter)
 {
@@ -130,7 +130,7 @@ void DoSomething(int someParameter)
 4.在操作尚未完成时使用.Result或.GetAwaiter().GetResult()
 
 #### 7.不要隐藏基类方法
-**错误的例子**
+错误的例子
 ```
 using System;
 
@@ -147,7 +147,7 @@ namespace MyLibrary
   }
 }
 ```
-**正确的例子**
+正确的例子
 ```
 using System;
 
@@ -167,7 +167,7 @@ namespace MyLibrary
 #### 8.委托方法“BeginInvoke”的调用应该与“EndInvoke”配对
 BeginInvoke在执行的时候生成的一些资源只有在调用EndInvoke才会被释放，所以异步调用BeginInvoke和EndInvoke要成对使用
 
-**错误的例子**
+错误的例子
 ```
 public delegate string AsyncMethodCaller();
 
@@ -179,7 +179,7 @@ public static void Main()
     IAsyncResult result = caller.BeginInvoke(null, null); 
 }
 ```
-**正确的例子**
+正确的例子
 ```
 public delegate string AsyncMethodCaller();
 
@@ -200,7 +200,7 @@ Begi
 2.造成内部代码的不稳定
 3.被不受信任的代码调用
 
-**错误的例子**
+错误的例子
 ```
 using System.Reflection;
 
@@ -213,7 +213,7 @@ object result = dynMethod.Invoke(dynClass, null);
 #### 10.加密应该更加安全
 强密码算法是可抵抗密码分析的密码系统，它们不易受到诸如蛮力攻击之类的知名攻击,建议仅使用由密码社区广泛测试和推广的密码算法。
 
-**错误的例子**
+错误的例子
 ```
 var tripleDES1 = new TripleDESCryptoServiceProvider(); //不合规：三重DES容易受到中间相遇攻击
 
@@ -221,14 +221,14 @@ var simpleDES = new DESCryptoServiceProvider（）; //不符合规定：DES与56
 
 var RC2 = new RC2CryptoServiceProvider（）; //不合规：RC2容易受到相关密钥攻击
 ```
-**正确的例子**
+正确的例子
 ```
 var AES = new AesCryptoServiceProvider();
 ```
 
 #### 11.构造函数不要调用可覆盖方法
 类构造的执行顺序是从基类开始调用构造函数，有时候在构造函数中调用可被子类覆盖的方法会导致一些空引用的异常
-**错误的例子**
+错误的例子
 ```
 public class Parent
 {
@@ -262,14 +262,14 @@ public class Child : Parent
 #### 12.自定义Exception类应该被设置为 public
 自定义的Exception是为了我们能够提供更多更精准的自定义信息，然而必须是public才能正常使用，如果抛出非public类的Exception，将会导致最终抛出的是该异常类的public基类，导致自定义的数据丢失
 
-**错误的例子**
+错误的例子
 ```
 internal class MyException : Exception 
 {
   // ...
 }
 ```
-**正确的例子**
+正确的例子
 ```
 public class MyException : Exception
 {
@@ -280,7 +280,7 @@ public class MyException : Exception
 #### 13.不要在finaly语句块中抛出异常
 在finaly语句块中抛出异常将会导致try catch中的异常抛出被覆盖，从而丢失异常信息
 
-**错误的例子**
+错误的例子
 ```
 try
 {
@@ -292,7 +292,7 @@ finally
   throw new InvalidOperationException(); //try 中的异常被覆盖
 }
 ```
-**正确的例子**
+正确的例子
 ```
 try
 {
@@ -308,7 +308,7 @@ finally
 #### 14.Event字段不要设置为 Virtual
 在C#中，对 Event 的支持是由编译器生成 private delegate 和隐式 add remove 等一套driver包装实现的，如果Virtual Event 被多次覆盖，将会导致编译器生成多套新的delegate driver
 
-**错误的例子**
+错误的例子
 ```
 abstract class Car
 {
@@ -342,7 +342,7 @@ class Program
   }
 }
 ```
-**正确的例子**
+正确的例子
 ```
 abstract class Car
 {
@@ -376,7 +376,7 @@ class Program
 #### 15.枚举值 0 应该被命名为 None
 枚举值的 0 位不应该被使用，而应该被设置为 None，在枚举默认值也是 0 的时候，将会导致我们无法分辨 0 到底是其使用值还是未经赋值的默认值
 
-**错误的例子**
+错误的例子
 ```
 [Flags]
 enum FruitType
@@ -387,7 +387,7 @@ enum FruitType
     Strawberry = 4
 }
 ```
-**正确的例子**
+正确的例子
 ```
 [Flags]
 enum FruitType
@@ -408,7 +408,7 @@ enum FruitType
 5. 检查和清理所有不安全的输入入口
 6. 使用权限较低，敏感性更低的数据库账号来减少受到攻击的影响
 
-**错误的例子**
+错误的例子
 ```
 public void Foo(DbContext context, string query, string param)
 {
@@ -433,7 +433,7 @@ public void Bar(SqlConnection connection, string param)
     adapter = new SqlDataAdapter(sensitiveQuery, connection); // 可注入
 }
 ```
-**正确的例子**
+正确的例子
 ```
 public void Foo(DbContext context, string value)
 {
@@ -453,7 +453,7 @@ public void Foo(DbContext context, string value)
 }
 ```
 #### 17.不要忽略捕捉到的异常
-**错误的例子**
+错误的例子
 ```
 string text = "";
 try
@@ -464,7 +464,7 @@ catch (Exception exc)
 {
 }
 ```
-**正确的例子**
+正确的例子
 ```
 string text = "";
 try
@@ -479,7 +479,7 @@ catch (Exception exc)
 #### 18.使用as类型转换会更好
 当我们在进行类型转换而出现错误时会抛出InvalidCastExceptions异常，而使用as运算符只会返回正确的转换值或者null
 
-**错误的例子**
+错误的例子
 ```
 public interface IMyInterface
 { /* ... */ }
@@ -503,7 +503,7 @@ public static class Program
   }
 }
 ```
-**正确的例子**
+正确的例子
 ```
 public interface IMyInterface
 { /* ... */ }
@@ -531,7 +531,7 @@ public static class Program
 }
 ```
 #### 19.禁止嵌套类的成员与外层类静态成员同名
-**错误的例子**
+错误的例子
 ```
 class Outer
 {
@@ -547,7 +547,7 @@ class Outer
   }
 }
 ```
-**正确的例子**
+正确的例子
 ```
 class Outer
 {
@@ -566,7 +566,7 @@ class Outer
 #### 20.非静态成员禁止修改内部静态成员
 如果多实例对静态成员的修改，不仅数据会错乱，也会引发并发问题
 
-**错误的例子**
+错误的例子
 ```
 public class MyClass
 {
@@ -582,7 +582,7 @@ public class MyClass
 
 #### 21.方法的重载不要改变参数的默认值
 
-**错误的例子**
+错误的例子
 ```
 public class Base
 {
@@ -606,7 +606,7 @@ public class Derived : Base
 #### 23.非Flags枚举禁止用于位运算
 非Flags枚举总是表示一个值，这与Flags的叠加值含义不同，当用非Flags进行运算会导致阅读人员的困惑
 
-**错误的例子**
+错误的例子
 ```
 enum Permissions
 {
@@ -619,7 +619,7 @@ enum Permissions
 
 var x = Permissions.Read | Permissions.Write; 
 ```
-**正确的例子**
+正确的例子
 ```
 [Flags]
 enum Permissions
@@ -634,14 +634,14 @@ enum Permissions
 var x = Permissions.Read | Permissions.Write;
 ```
 #### 24.公开常量不应该被修改
-**错误的例子**
+错误的例子
 ```
 public class Foo
 {
     public const double Version = 1.0; 
 }
 ```
-**正确的例子**
+正确的例子
 ```
 public class Foo
 {
@@ -654,7 +654,7 @@ public class Foo
 #### 25.警惕命令行参数的安全性
 命令行参数同样会导致用户输入性风险，请警惕
 
-**示例**
+示例
 ```
 namespace MyNamespace
 {
@@ -671,7 +671,7 @@ namespace MyNamespace
 #### 26.属性Set访问器 “value” 的使用
 在一般的Set访问器中，应该使用“value”关键字赋值，如果属性不能赋值，应该在set访问器抛出异常
 
-**错误的例子**
+错误的例子
 ```
 private int count;
 public int Count
@@ -680,7 +680,7 @@ public int Count
   set { count = 42; } 
 }
 ```
-**正确的例子**
+正确的例子
 ```
 private int count;
 public int Count
@@ -700,7 +700,7 @@ public int Count
 #### 27."is" 不能和 "this" 同时使用
 一般情况下，this和is不会同时使用，唯一可能会出现的情况是在调用父类方法时判断子类的类型去执行逻辑，对于此类代码，违背OOP的原则，我们应将子类的逻辑放入子类代码中，而不是放到父类执行
 
-**错误的例子**
+错误的例子
 ```
 public class Food //基类
 {
@@ -715,7 +715,7 @@ public class Food //基类
 }
 ```
 #### 28.子类私有成员不能与父类成员同名
-**错误的例子**
+错误的例子
 ```
 public class Fruit
 {
@@ -729,7 +729,7 @@ public class Raspberry : Fruit
   private static Color FLESH;
 }
 ```
-**正确的例子**
+正确的例子
 ```
 public class Fruit
 {
@@ -746,7 +746,7 @@ public class Raspberry : Fruit
 #### 29.禁止重载带有默认值参数的方法
 当另一个没有可选参数的重载方法出现时，除了使方法更难以理解外，还将会引发一些问题
 
-**错误的例子**
+错误的例子
 ```
 public class MyClass
 {
@@ -763,11 +763,11 @@ myClass.Print(new string[3] {"yes", "no", "maybe"});  // 哪个方法会被调�
 多维数组结构复杂描述相对困难，缺少作为参数的直观性，请不要使用多维数组作为参数类型
 
 #### 31.不要用关键字作为变量标识
-**错误的例子** 
+错误的例子 
 ``` 
 int await = 42; 
 ```
-**正确的例子**
+正确的例子
 ``` 
 int someOtherName = 42;
 ```
@@ -778,7 +778,7 @@ int someOtherName = 42;
 
 我们应该将异步方法用Task返回
 
-**错误的例子**
+错误的例子
 ```
 class HttpPrinter
 {
@@ -807,7 +807,7 @@ class HttpPrinter
   }
 }
 ```
-**正确的例子**
+正确的例子
 ```
 class HttpPrinter
 {
@@ -829,7 +829,7 @@ class HttpPrinter
 }
 ```
 #### 33.Using语句创建的IDispose对象禁止返回
-**错误的例子**
+错误的例子
 ```
 public FileStream WriteToFile(string path, string text)
 {
@@ -841,7 +841,7 @@ public FileStream WriteToFile(string path, string text)
   }
 }
 ```
-**正确的例子**
+正确的例子
 ```
 public FileStream WriteToFile(string path, string text)
 {
@@ -856,7 +856,7 @@ public FileStream WriteToFile(string path, string text)
 #### 35.ThreadStatic 使用及初始化
 基于 ThreadStaticAttribute 线程静态化的字段，在线程内部共享，不同的线程获取各自独立的静态资源，所以标注 ThreadStatic 的字段应该由线程自己初始化，另外非Static 修饰的字段不允许设置为 ThreadStatic
 
-**错误的例子**
+错误的例子
 ```
 public class Foo
 {
@@ -864,7 +864,7 @@ public class Foo
   public static object PerThreadObject = new object(); // 只有初始化线程执行了一次，其他线程获取是null
 }
 ```
-**正确的例子**
+正确的例子
 ```
 public class Foo
 {
